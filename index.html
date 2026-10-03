@@ -675,7 +675,9 @@ body { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inse
     try {
       var file = new File([text], name, { type: "text/csv" });
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({ files: [file], title: name });
+        // Nur die Datei teilen: Ein mitgegebener Titel landet sonst als
+        // eigene "Text"-Datei im Zielordner (03.10.2026).
+        await navigator.share({ files: [file] });
         try { window.localStorage.setItem(EXPORT_KEY, todayISO()); } catch (e) { /* egal */ }
         flash("Gesendet");
         return;
